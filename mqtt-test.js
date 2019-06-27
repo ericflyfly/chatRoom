@@ -2,6 +2,11 @@ var mqtt = require('mqtt')
 var client  = mqtt.connect('mqtt://127.0.0.1')
 
 
+client.on('connect', function () {
+    client.subscribe('presence')
+    //client.publish('presence', data);
+})
+
 // Get process.stdin as the standard input object.
 var standard_input = process.stdin;
 
@@ -12,25 +17,18 @@ standard_input.setEncoding('utf-8');
 console.log("Please input text in command line.");
 
 // When user input data and click enter key.
-standard_input.on('data', function (data) {
+standard_input.on('data', data => {
 
-    // User input exit.
-    if(data === 'exit\n'){
-        // Program exit.
-        console.log("User input complete, program exit.");
-        process.exit();
-    }else
-    {
-        // Print user input in console.
-        console.log('User Input Data : ' + data);
-        client.on('connect', function () {
-            //client.subscribe('presence')
-            console.log(data);
-            client.publish('presence', data);
-          })
-    }
-});
+    // Print user input in console.
+    console.log('User Input Data : ' + data);
+    client.publish('chatRoom', data);
+})
 
+client.on('message', function (topic, message) {
+    // message is Buffer
+    console.log(message.toString())
+    //client.end()
+})
 
 
 

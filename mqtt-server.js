@@ -22,6 +22,12 @@ server.on('clientConnected', function(client) {
     console.log(numConnection.toString() + ' client connected.');
 });
 
+server.on('clientDisconnected', function(client) {
+    console.log('client disconnected', client.id);
+    numConnection -= 1;
+    console.log(numConnection.toString() + ' client connected.');
+});
+
 // fired when a message is received
 server.on('published', function(packet, client) {
   console.log('Published', packet.payload);
