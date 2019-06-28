@@ -5,7 +5,8 @@ const io = require('socket.io')(http);
 const mqtt = require('mqtt');
 
 //share variables
-var num = 0;
+var num_connect = 0;
+var num_msg = 0;
 
 //connect with frontend
 app.get('/', function(req, res) {
@@ -14,21 +15,23 @@ app.get('/', function(req, res) {
 
 const client = mqtt.connect('mqtt://test.mosquitto.org');
 
-//Listen message receive event and then take action respectively
+//Listen message event and then take action respectively
 client.on('message', function(topic, message){
     message = message.toString();
     switch(topic){
         case 'chat_room/username':
             //console.log('Receive %s from %s', message, topic);
             io.emit('is_online', '🔵 <i>' + message + ' join the chat..</i>');
-            num += 1;
-            io.emit('num_update', num.toString());
+            num_connect += 1;
+            client.publish('status/num_connect', num_connect.toString());
+            io.emit('num_update', num_connect.toString());
             break;
         case 'chat_room/disconnect':
             //console.log('Receive %s from %s', message, topic);
             io.emit('is_online', '🔴 <i>' + message + ' left the chat..</i>');
-            num -= 1;
-            io.emit('num_update', num.toString());
+            num_connect -= 1;
+            client.publish('status/num_connect', num_connect.toString());
+            io.emit('num_update', num_connect.toString());
             break;
         case 'chat_room/chat_message':
             //console.log('Receive %s from %s', message, topic);
@@ -37,7 +40,7 @@ client.on('message', function(topic, message){
             io.emit('chat_message', '<strong>' + username[0] + '</strong>: ' + message.substring(username[0].length + 1, message.length));
             break;
         default:
-            console.log('\'%s\' topic did not handle --> ', topic);
+            console.log('\'%s\' topic not handled --> ', topic);
     }
 });
 
@@ -49,6 +52,7 @@ io.sockets.on('connection', function(socket) {
         client.subscribe('chat_room/disconnect');
         client.subscribe('chat_room/username');
         client.subscribe('chat_room/chat_message');
+        //client.subscribe('chat_room/#');
         socket.username = username;
         client.publish('chat_room/username', username);
     });

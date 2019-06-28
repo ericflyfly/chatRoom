@@ -40,6 +40,7 @@
       socket.on('is_online', function(username) {
           $('#messages').append($('<li>').html(username));
       });
+      
       //update number of people in the chatroom
       socket.on('num_update', function(msg){
         var chatHtml = document.getElementById("chat_status");
