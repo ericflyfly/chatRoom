@@ -4,7 +4,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const mqtt = require('mqtt');
 
-//share variables
+//share variable
 var num_connect = 0;
 var num_msg = 0;
 
