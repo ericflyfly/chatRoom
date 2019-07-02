@@ -12,16 +12,31 @@ class App extends Component {
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
     socket.on("FromAPI", data => this.setState({ response: data }));
+    socket.on("num_connect", data => this.setState({num_connect: data}));
+    socket.on("num_msg", data => this.setState({num_msg: data}));
   }
   render() {
-    const { response } = this.state;
+    const { response, num_connect, num_msg } = this.state;
     return (
         <div style={{ textAlign: "center" }}>
-          {response
-              ? <p>
-                The temperature in Florence is: {response} °F
-              </p>
-              : <p>Loading...</p>}
+          {response? 
+          <p>
+            The temperature in Florence is: {response} °F
+          </p>
+          : <p>Loading...</p>
+          }
+          {num_connect ?
+          <p>
+          Chatroom has {num_connect} connections.
+          </p> 
+          :<p>Loading...</p>
+          }
+          {num_msg ?
+          <p>
+            Chatroom has transferred {num_msg} messages.
+          </p> 
+          :<p>Loading...</p>
+          }
         </div>
     );
   }
