@@ -73,7 +73,7 @@ io.on("connection", socket => {
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
-//
+//Receive data from dark sky api and push to the frontend
 const getApiAndEmit = async socket => {
     try {
       const res = await axios.get(

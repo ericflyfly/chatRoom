@@ -15,6 +15,7 @@ app.get('/', function(req, res) {
 
 const client = mqtt.connect('mqtt://test.mosquitto.org');
 
+//listen to MQTT broker connection
 client.on('connect', function (){
     //MQTT Connection success, subscribe to certain topics
     console.log("Connect to mqtt");
@@ -23,10 +24,6 @@ client.on('connect', function (){
     client.subscribe('chat_room/chat_message');
     client.subscribe('monitor/online');
 });
-
-/*client.on('error', function(err){
-    console.log(err);
-});*/
 
 //Listen message event and then take action respectively
 client.on('message', function(topic, message){
