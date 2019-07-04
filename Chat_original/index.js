@@ -17,9 +17,9 @@ io.sockets.on('connection', function(socket) {
         io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
     })
 
-    socket.on('chat_message', function(message) {
-        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
-    });
+    //***Fill here***//
+    //listen to an event from front-end and then fire an event with message in HTML through socket.io
+    //message --> '<strong>' + socket.username + '</strong>: ' + message
 
 });
 
