@@ -42,7 +42,7 @@ client.on('message', function(topic, msg){
     default:
       console.log('Error!!!! \'%s\' topic not handled --> ', topic);
   }
-  //console.log('%s -> %s', topic, msg.toString());
+  console.log('%s -> %s', topic, msg.toString());
 });
 
 /*

@@ -18,13 +18,7 @@ class App extends Component {
   render() {
     const { response, num_connect, num_msg } = this.state;
     return (
-        <div style={{ textAlign: "center" }}>
-          {response? 
-          <p>
-            The temperature in Florence is: {response} °F
-          </p>
-          : <p>Loading...</p>
-          }
+        <div style={{ textAlign: "center" }}>         
           {num_connect ?
           <p>
           Chatroom has {num_connect} connections.
@@ -41,4 +35,11 @@ class App extends Component {
     );
   }
 }
+
+/*{response? 
+<p>
+The temperature in Florence is: {response} °F
+</p>
+: <p>Loading...</p>
+}*/
 export default App;

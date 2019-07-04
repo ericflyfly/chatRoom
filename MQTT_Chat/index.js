@@ -63,7 +63,7 @@ client.on('message', function(topic, message){
 });
 
 
-//socket.io communication with the frontend
+//socket.io communicate with frontend
 io.sockets.on('connection', function(socket) {
     //console.log(client);
     socket.on('username', function(username) {
